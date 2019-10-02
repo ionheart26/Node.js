@@ -1,0 +1,9 @@
+<script>
+	key = 1231
+	field = 21.44
+	setInterval(function(){
+		    url = "http://13.209.17.156:3000/update?api_key=" + key + "&field1=" + field++
+	    	    open(url)
+ 		    },1000)
+//url을 template string으로 못만드는 이유: 주소 속 //이후가 주석처리되어서
+</script>
