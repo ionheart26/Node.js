@@ -46,6 +46,7 @@ app.get('/log', function(req, res) {
 
 app.get("/dump", function(req, res) {
   console.log("param=" + req.query);
+  count = req.query.count;
 
   var qstr = 'select * from sensors ';
   connection.query(qstr, function(err, rows, cols) {
@@ -54,10 +55,14 @@ app.get("/dump", function(req, res) {
       res.send('query error: '+ qstr);
       return;
     }
+      
+    var loop = 0;
+    if(count==undefined) loop = rows.length;
+    else loop = count;
 
-    console.log("Got "+ rows.length +" records");
+    console.log("Got "+ loop +" records");
     html = ""
-    for (var i=0; i< rows.length; i++) {
+    for (var i=0; i< loop; i++) {
        html += JSON.stringify(rows[i]);
        html += "<br/>"
     }
@@ -68,6 +73,7 @@ app.get("/dump", function(req, res) {
 
 app.get('/graph', function (req, res) {
     console.log('got app.get(graph)');
+    count = req.query.count;
     var html = fs.readFile('./graph.html', function (err, html) {
     html = " "+ html
     console.log('read file');
@@ -78,7 +84,10 @@ app.get('/graph', function (req, res) {
 
       var data = "";
       var comma = ""
-      for (var i=0; i< rows.length; i++) {
+      var loop = 0;
+      if(count==undefined) loop = rows.length;
+      else loop = count;
+      for (var i=0; i< count; i++) {
          r = rows[i];
          data += comma + "[new Date(2017,04-1,"+ r.id +",00,38),"+ r.value +"]";
          comma = ",";
