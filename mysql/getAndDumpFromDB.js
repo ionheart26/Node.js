@@ -87,7 +87,7 @@ app.get('/graph', function (req, res) {
       var loop = 0;
       if(count==undefined) loop = rows.length;
       else loop = count;
-      for (var i=0; i< count; i++) {
+      for (var i=0; i< loop; i++) {
          r = rows[i];
          data += comma + "[new Date(2017,04-1,"+ r.id +",00,38),"+ r.value +"]";
          comma = ",";
